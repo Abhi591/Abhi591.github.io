@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhi591 — Developer & Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- https://cdn.jsdelivr.net/npm/vwo-fme-node-sdk@1/dist/client/vwo-fme-javascript-sdk.min.js -->
+  <!-- vwo-fme-javascript-sdk.min.js -->
+  <script src="vwo-fme-javascript-sdk.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d0d0c;
+      --surface: #161614;
+      --border: #2a2926;
+      --text: #e8e6e1;
+      --text-muted: #9a968e;
+      --accent: #d4a853;
+      --accent-dim: #b8923f;
+      --glow: rgba(212, 168, 83, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero */
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 0;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.8rem, 8vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.15s forwards;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 28ch;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Section */
+    section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      display: block;
+      padding: 1.5rem 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 1px var(--accent-dim), 0 12px 40px var(--glow);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* Links */
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--glow);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    let vwoClient;
+    let userId;
+
+    async function start() {
+        vwoClient = await vwoSdk.init({
+            accountId: 17001091,
+            sdkKey: "64794d03427b86edf45602df4317cdeb",
+            logger: {
+                level: "DEBUG",
+            },
+            useXHRInBrowser: true
+        });
+
+        userId = new URLSearchParams(window.location.search).get('userId');
+        result = await vwoClient.getFlag('featureOne', { id: userId });
+    }
+
+    function onTrackAndRedirect() {
+        if (vwoClient && userId !== undefined) {
+            vwoClient.trackEvent('event1', { id: userId });
+            window.location.reload();
+        }
+    }
+
+    start();
+  </script>
+  <header>
+    <div class="container">
+      <button type="button" onclick="onTrackAndRedirect()" style="margin-bottom: 1rem; padding: 0.5rem 1rem; cursor: pointer;">Track event & go to VWO</button>
+      <span class="hero-badge">Abhishek</span>
+      <h1>Wingify</h1>
+      <p class="hero-tagline">Developer & creator—crafting software and ideas on the web.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="card-grid">
+        <a href="https://github.com/Abhi591" class="card" target="_blank" rel="noopener">
+          <h3>GitHub</h3>
+          <p>Code, repos, and open-source contributions.</p>
+        </a>
+        <a href="#" class="card">
+          <h3>Blog</h3>
+          <p>Thoughts on tech, design, and building things.</p>
+        </a>
+        <a href="#" class="card">
+          <h3>Contact</h3>
+          <p>Get in touch for collaboration or just to say hi.</p>
+        </a>
+      </div>
+      <div class="links">
+        <a href="https://github.com/Abhi591" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Abhi591. Hosted on <a href="https://pages.github.com">GitHub Pages</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
